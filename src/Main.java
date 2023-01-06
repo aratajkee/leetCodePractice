@@ -55,9 +55,22 @@ class Solution {
 
     }
     public List<List<String>> groupAnagrams(String[] strs){
+
         List<List<String>> resultList = new ArrayList<>();
+        if (strs.length == 0){return resultList;}
+        HashMap<String, List<String>> hashMap = new HashMap<>();
 
+        for (String s: strs) {
 
+            char[] hash = new char[26];
+            for (char c: s.toCharArray()){
+                hash[c - 'a']++;
+            }
+            String key = new String(hash);
+            hashMap.computeIfAbsent(key, k -> new ArrayList<>());
+            hashMap.get(key).add(s);
+        }
+        resultList.addAll(hashMap.values());
         return resultList;
     }
 
@@ -67,6 +80,8 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-        String[] strs = new String[]{"eat","tea","tan","ate","nat","bat"};
+        String[] strs = new String[]{"cat","act","zxc","czx","xzc"};
+        List<List<String>> tmp = solution.groupAnagrams(strs);
+        System.out.println(tmp);
     }
 }
