@@ -73,6 +73,45 @@ class Solution {
         resultList.addAll(hashMap.values());
         return resultList;
     }
+    public int[] topFrequent(int[] nums, int k){
+        int[] res = new int[k];
+        HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>();
+        LinkedHashMap<Integer, Integer> sortedHash = new LinkedHashMap<Integer, Integer>();
+        ArrayList<Integer> list = new ArrayList<>();
+
+        for (int i: nums) {
+            hash.put(i, hash.getOrDefault(i, 0) + 1);
+
+        }
+        System.out.println(hash);
+
+        for (Map.Entry<Integer, Integer> entry: hash.entrySet()){
+            list.add(entry.getValue());
+        }
+        Collections.sort(list, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return (o2).compareTo(o1);
+            }
+        });
+        for (Integer i: list){
+            for (Map.Entry<Integer, Integer> entry: hash.entrySet()) {
+                if (entry.getValue().equals(i)){
+                    sortedHash.put(entry.getKey(), i);
+                }
+            }
+        }
+        System.out.println(sortedHash);
+
+        for (Integer i:sortedHash.values()) {
+            if(k>0){
+                res[k] = i;
+                k--;
+            }
+        }
+        return res;
+    }
+
 
 }
 
@@ -80,8 +119,8 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-        String[] strs = new String[]{"cat","act","zxc","czx","xzc"};
-        List<List<String>> tmp = solution.groupAnagrams(strs);
-        System.out.println(tmp);
+        int[] nums = new int[]{1,1,1,2,2,2,2,2,2,3};
+        int[] newNums = solution.topFrequent(nums, 1);
+        System.out.println(newNums);
     }
 }
