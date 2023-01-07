@@ -83,7 +83,6 @@ class Solution {
             hash.put(i, hash.getOrDefault(i, 0) + 1);
 
         }
-        System.out.println(hash);
 
         for (Map.Entry<Integer, Integer> entry: hash.entrySet()){
             list.add(entry.getValue());
@@ -101,11 +100,10 @@ class Solution {
                 }
             }
         }
-        System.out.println(sortedHash);
 
-        for (Integer i:sortedHash.values()) {
+        for (Integer i:sortedHash.keySet()) {
             if(k>0){
-                res[k] = i;
+                res[k-1] = i;
                 k--;
             }
         }
@@ -119,8 +117,10 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-        int[] nums = new int[]{1,1,1,2,2,2,2,2,2,3};
-        int[] newNums = solution.topFrequent(nums, 1);
-        System.out.println(newNums);
+        int[] nums = new int[]{1,1,1,2,2,2,2,2,2,3,12,12,12,12,12,12,12,12,12};
+        int[] newNums = solution.topFrequent(nums, 2);
+        for (Integer i:newNums) {
+            System.out.println(i);
+        }
     }
 }
