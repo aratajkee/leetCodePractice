@@ -109,6 +109,38 @@ class Solution {
         }
         return res;
     }
+    public int[] productExceptSelf(int[] nums){
+        int[] res = new int[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            int tmp = 1;
+            for (int j = 0; j < nums.length; j++) {
+                 if (i != j ){
+                     tmp *= nums[j];
+                 }
+            }
+            res[i] = tmp;
+        }
+        return res;
+    }
+    public int[] productExceptSelfV2(int[] nums){
+        int[] res = new int[nums.length];
+        int prefix = 1;
+        int postfix = 1;
+
+        for (int i = 0; i < nums.length; i++) {
+            res[i] = prefix;
+            prefix *= nums[i];
+
+        }
+        for (int i = nums.length -1;i > -1; i--) {
+            res[i] *= postfix;
+            postfix *= nums[i];
+        }
+
+
+        return res;
+    }
 
 
 }
@@ -117,9 +149,11 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-        int[] nums = new int[]{1,1,1,2,2,2,2,2,2,3,12,12,12,12,12,12,12,12,12};
-        int[] newNums = solution.topFrequent(nums, 2);
-        for (Integer i:newNums) {
+
+        int[] nums = new int[]{1,2,3,4};
+        nums = solution.productExceptSelfV2(nums);
+        for (Integer i:nums
+             ) {
             System.out.println(i);
         }
     }
