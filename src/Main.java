@@ -224,9 +224,9 @@ class Solution {
         int res = 0;
         int len = 0;
 
-        for (Integer n: nums) {
-            if (!numSet.contains(n - 1)){
-                while (numSet.contains(n + len)){
+        for (Integer n : nums) {
+            if (!numSet.contains(n - 1)) {
+                while (numSet.contains(n + len)) {
                     len++;
                 }
                 res = Math.max(len, res);
@@ -235,6 +235,36 @@ class Solution {
         return res;
     }
 
+    public boolean isValidParentheses(String s) {
+        char[] cArr = s.toCharArray();
+        if (s.length() % 2 != 0) {
+            return false;
+        }
+
+        Stack<Character> stack = new Stack<>();
+        HashMap<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put(']', '[');
+        map.put('}', '{');
+
+        for (Character c : cArr) {
+            if (map.containsKey(c)) {
+                if (!stack.empty() && stack.peek() == map.get(c)) {
+                    stack.pop();
+                } else {
+                    return false;
+                }
+            }else {
+                stack.push(c);
+            }
+        }
+
+        if (stack.empty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
 
@@ -242,11 +272,8 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-
-        int[] nums = new int[]{100, 4, 200, 1, 3, 2};
-        int[] nums2 = new int[]{9,1,4,7,3,-1,0,5,8,-1,6};
-        System.out.println(solution.longestConsecutive(nums2));
-
+        String s = "({[)]()}";
+        System.out.println(solution.isValidParentheses(s));
 
 
     }
