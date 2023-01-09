@@ -186,32 +186,53 @@ class Solution {
             }
         }
         //check 3x3 blocks
-        for (int i = 0; i < 9; i+=3) {
-            for (int j = 0; j < 9; j+=3) {
-                if(!checkBlock(i,j,board)){
+        for (int i = 0; i < 9; i += 3) {
+            for (int j = 0; j < 9; j += 3) {
+                if (!checkBlock(i, j, board)) {
                     return false;
                 }
             }
         }
         return true;
     }
-    public boolean checkBlock(int I, int J, char[][] board){
+
+    public boolean checkBlock(int I, int J, char[][] board) {
         Set<Character> blockSet = new HashSet<>();
         int rows = I + 3;
         int cols = J + 3;
 
         for (int i = I; i < rows; i++) {
             for (int j = J; j < cols; j++) {
-                if (board[i][j] == '.'){
+                if (board[i][j] == '.') {
                     continue;
                 }
-                if (blockSet.contains(board[i][j])){
+                if (blockSet.contains(board[i][j])) {
                     return false;
                 }
                 blockSet.add(board[i][j]);
             }
         }
         return true;
+    }
+
+    public int longestConsecutive(int[] oldNums) {
+        Integer[] nums = new Integer[oldNums.length];
+        Arrays.setAll(nums, i -> oldNums[i]);
+
+        Set<Integer> numSet = new HashSet<Integer>();
+        Collections.addAll(numSet, nums);
+        int res = 0;
+        int len = 0;
+
+        for (Integer n: nums) {
+            if (!numSet.contains(n - 1)){
+                while (numSet.contains(n + len)){
+                    len++;
+                }
+                res = Math.max(len, res);
+            }
+        }
+        return res;
     }
 
 
@@ -222,24 +243,11 @@ public class Main {
 
         Solution solution = new Solution();
 
-        char[][] board = new char[][]
-                {{'1', '3', '.', '.', '7', '.', '.', '.', '.'}
-                        , {'6', '.', '.', '1', '9', '5', '.', '.', '.'}
-                        , {'.', '9', '8', '.', '.', '.', '.', '6', '.'}
-                        , {'8', '.', '.', '.', '6', '.', '.', '.', '3'}
-                        , {'4', '.', '.', '8', '.', '3', '.', '.', '1'}
-                        , {'7', '.', '.', '.', '2', '.', '.', '.', '6'}
-                        , {'.', '6', '.', '.', '.', '.', '2', '8', '.'}
-                        , {'.', '.', '.', '4', '1', '9', '.', '.', '5'}
-                        , {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+        int[] nums = new int[]{100, 4, 200, 1, 3, 2};
+        int[] nums2 = new int[]{9,1,4,7,3,-1,0,5,8,-1,6};
+        System.out.println(solution.longestConsecutive(nums2));
 
-        boolean b = solution.isValidSudoku(board);
-        System.out.println(b);
-//        for (char[] cArr : board) {
-//            for (Character c : cArr) {
-//                System.out.print(c + " ");
-//            }
-//            System.out.println("\n");
-//        }
+
+
     }
 }
