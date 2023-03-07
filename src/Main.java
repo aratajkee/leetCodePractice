@@ -266,15 +266,69 @@ class Solution {
         }
     }
 
+    public int[] dailyTemperatures(int[] temperatures){
+        int[] ans = new int[temperatures.length];
+        Stack<Integer> stack = new Stack<>();
+        for (int currDay = 0; currDay < temperatures.length; currDay++) {
+            while (!stack.isEmpty() && temperatures[currDay] > temperatures[stack.peek()]) {
+                int prevDay = stack.pop();
+                ans[prevDay] = currDay - prevDay;
+            }
+            stack.push(currDay);
+        }
+        return ans;
+    }
 }
+class MinStack{
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+    public MinStack() {;
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
+
+    public void push(int val) {
+        stack.push(val);
+
+        if(!minStack.isEmpty() && minStack.peek() > val){
+            minStack.push(val);
+        }else if (minStack.isEmpty()){
+            minStack.push(val);
+        }
+    }
+
+    public void pop() {
+        stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}
+
 
 public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-        String s = "({[)]()}";
-        System.out.println(solution.isValidParentheses(s));
+        MinStack st = new MinStack();
+        st.push(5);
+        st.push(2);
+        st.push(3);
+        st.push(10);
+        st.push(4);
 
+        System.out.println(st.top());
+        System.out.println(st.getMin());
 
+        st.pop();
+        st.pop();
+
+        System.out.println(st.top());
+        System.out.println(st.getMin());
     }
 }
