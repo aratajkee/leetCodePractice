@@ -1,4 +1,3 @@
-import com.sun.org.apache.xerces.internal.impl.xs.util.XSObjectListImpl;
 
 import java.util.*;
 
@@ -278,6 +277,41 @@ class Solution {
         }
         return ans;
     }
+    public int evaluateRPN(String[] tokens){
+
+        Stack <Integer> memory = new Stack<>();
+        Integer tmpLast;
+        Integer tmpPrev;
+
+        for (String token: tokens) {
+            switch (token){
+                case "+":
+                    tmpLast = memory.pop();
+                    tmpPrev = memory.pop();
+                    memory.push(tmpPrev + tmpLast);
+                    break;
+                case "-":
+                    tmpLast = memory.pop();
+                    tmpPrev = memory.pop();
+                    memory.push(tmpPrev - tmpLast);
+                    break;
+                case "*":
+                    tmpLast = memory.pop();
+                    tmpPrev = memory.pop();
+                    memory.push(tmpPrev * tmpLast);
+                    break;
+                case "/":
+                    tmpLast = memory.pop();
+                    tmpPrev = memory.pop();
+                    memory.push(tmpPrev / tmpLast);
+                    break;
+                default:
+                    memory.push(Integer.valueOf(token));
+            }
+        }
+
+        return memory.pop();
+    }
 }
 class MinStack{
     private Stack<Integer> stack;
@@ -315,20 +349,8 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-        MinStack st = new MinStack();
-        st.push(5);
-        st.push(2);
-        st.push(3);
-        st.push(10);
-        st.push(4);
 
-        System.out.println(st.top());
-        System.out.println(st.getMin());
-
-        st.pop();
-        st.pop();
-
-        System.out.println(st.top());
-        System.out.println(st.getMin());
+        String[] arr = {"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
+        System.out.println(solution.evaluateRPN(arr));
     }
 }
