@@ -1,6 +1,36 @@
 
+import java.lang.invoke.StringConcatException;
 import java.util.*;
+class MinStack{
+    private Stack<Integer> stack;
+    private Stack<Integer> minStack;
+    public MinStack() {;
+        stack = new Stack<>();
+        minStack = new Stack<>();
+    }
 
+    public void push(int val) {
+        stack.push(val);
+
+        if(!minStack.isEmpty() && minStack.peek() > val){
+            minStack.push(val);
+        }else if (minStack.isEmpty()){
+            minStack.push(val);
+        }
+    }
+
+    public void pop() {
+        stack.pop();
+    }
+
+    public int top() {
+        return stack.peek();
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}
 class Solution {
     public boolean containsDuplicate(int[] nums) {
 
@@ -312,35 +342,21 @@ class Solution {
 
         return memory.pop();
     }
-}
-class MinStack{
-    private Stack<Integer> stack;
-    private Stack<Integer> minStack;
-    public MinStack() {;
-        stack = new Stack<>();
-        minStack = new Stack<>();
-    }
-
-    public void push(int val) {
-        stack.push(val);
-
-        if(!minStack.isEmpty() && minStack.peek() > val){
-            minStack.push(val);
-        }else if (minStack.isEmpty()){
-            minStack.push(val);
+    public static boolean isPalindrome(String s){
+        if(s.length()==1)
+            return true;
+        char[] arr = s
+                .toLowerCase()
+                .replaceAll("[^a-z0-9]+","")
+                .toCharArray();
+        final int arrLen = arr.length;
+        if (arrLen<1)
+            return true;
+        for (int i = 0; i < arrLen; i++) {
+            if(arr[i] != arr[arrLen -1 -i])
+                return false;
         }
-    }
-
-    public void pop() {
-        stack.pop();
-    }
-
-    public int top() {
-        return stack.peek();
-    }
-
-    public int getMin() {
-        return minStack.peek();
+        return true;
     }
 }
 
@@ -349,8 +365,7 @@ public class Main {
     public static void main(String[] args) {
 
         Solution solution = new Solution();
-
-        String[] arr = {"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
-        System.out.println(solution.evaluateRPN(arr));
+        String string = "0123P";
+        System.out.println(Solution.isPalindrome(string));
     }
 }
